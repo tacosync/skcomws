@@ -1,0 +1,4 @@
+python-socketio >= 5.3.0
+sanic >= 21.3.4
+requests >= 2.25.1
+websocket-client >= 1.1.0
