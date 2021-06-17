@@ -29,12 +29,20 @@ async def server_said(data):
         await sio.disconnect()
 
 @sio.event
+async def tick(data):
+    print('[server]: tick', data)
+
+@sio.event
 async def disconnect():
     print('[server]: disconnected')
+    await sio.disconnect()
 
-async def main():
+async def run_client():
     await sio.connect('ws://localhost:63047', transports=['websocket'])
     await sio.wait()
+
+async def main():
+    await run_client()
 
 if __name__ == '__main__':
     asyncio.run(main())
