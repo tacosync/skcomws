@@ -24,7 +24,11 @@ async def server_said(data):
         print('    [me]: %s' % message)
         count += 1
         await sio.sleep(1)
-        await sio.emit('client_said', { 'message': message })
+        try:
+            await sio.emit('client_said', { 'message': message })
+        except Exception as ex:
+            print('Exception thrown:', ex)
+            pass
     else:
         await sio.disconnect()
 
@@ -35,7 +39,7 @@ async def tick(data):
 @sio.event
 async def disconnect():
     print('[server]: disconnected')
-    await sio.disconnect()
+    # await sio.disconnect()
 
 async def run_client():
     await sio.connect('ws://localhost:63047', transports=['websocket'])
