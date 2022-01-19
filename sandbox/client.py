@@ -5,7 +5,7 @@ Socket.IO client for testing
 import asyncio
 import socketio
 
-COUNT_LIMIT = 3
+COUNT_LIMIT = 300000
 
 count = 0
 sio = socketio.AsyncClient()
@@ -37,9 +37,13 @@ async def tick(data):
     print('[server]: tick', data)
 
 @sio.event
+async def tock(data):
+    print('[server]: tock', data)
+
+@sio.event
 async def disconnect():
     print('[server]: disconnected')
-    # await sio.disconnect()
+    await sio.disconnect()
 
 async def run_client():
     await sio.connect('ws://localhost:63047', transports=['websocket'])
