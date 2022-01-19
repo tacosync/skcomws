@@ -60,11 +60,16 @@ async def loop_task():
 sio.start_background_task(init_task)
 sio.start_background_task(loop_task)
 
+# 間接執行的絕對位置
+target = 'servers.asgi_server:app'
+
 def main():
     print('==============================')
     print('       async_mode = asgi')
-    print('==============================')    
-    uvicorn.run('servers.asgi_server:app', host="127.0.0.1", port=PORT, log_level="info")
+    print('==============================')
+    uvicorn.run(target, host="127.0.0.1", port=PORT, log_level="info")
 
 if __name__ == '__main__':
+    # 直接執行的絕對位置
+    target = 'asgi_server:app'
     main()
